@@ -125,6 +125,13 @@ const authUser = async (req, res, next) => {
     }
 };
 
+const logout = async (req, res, next) => {
+    res.cookie('jwt', 'loggedout', {
+        expires: new Date(Date.now() + 10 * 1000),
+    });
+    res.status(200).json({ status: 'success' });
+};
+
 const getMe = async (req, res) => {
     const user = await User.findById(req.header._id);
 
@@ -174,5 +181,6 @@ module.exports = {
     activeToken,
     authUser,
     getMe,
-    updateMe
+    updateMe,
+    logout
 }
